@@ -14,14 +14,14 @@ import static org.junit.Assert.*;
  */
 
 public class CellTest {
+    Cell testCell;
     @Before
     public void setUp(){
-
+        testCell = new Cell();
     }
     @Test
     public void testCell(){
-        Cell c = new Cell();
-        assertNotNull(c);
+        assertNotNull(testCell);
 
     }
 
@@ -30,6 +30,15 @@ public class CellTest {
         Cell c = new Cell();
         c.setName("C00");
         assertEquals("C00", c.name());
+    }
+
+    @Test
+    public void testValidName(){
+        String shortName = "C2";
+        String startsWithNumber = "910";
+
+        assertFalse(testCell.setName(shortName));
+        assertFalse(testCell.setName(startsWithNumber));
     }
 
 
