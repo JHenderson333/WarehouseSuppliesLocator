@@ -46,9 +46,17 @@ public class CellDaoTest {
     public void testReadWriteDeleteCell() throws Exception {
         Cell cell = new Cell();
         cell.setName("C00");
+        cell.setXCoord(0);
+        cell.setYCoord(0);
+
         cellDao.insertAll(cell);
+
         List<Cell> byName = cellDao.getAll();
-        assertEquals(cell.name(), byName.get(0).name());
+        Cell dbCell = byName.get(0);
+
+        assertEquals(cell.name(), dbCell.name());
+        assertEquals(cell.xCoord(), dbCell.xCoord());
+        assertEquals(cell.yCoord(), dbCell.yCoord());
 
         cellDao.delete(cell);
         List<Cell> cells = cellDao.getAll();

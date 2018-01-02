@@ -16,9 +16,23 @@ public class Cell {
     @NonNull
     private String name;
 
-    public Cell(){
-        //No arg constructor for ORMLite
+    @NonNull
+    private int xCoord;
+
+    @NonNull
+    private int yCoord;
+
+
+    public Cell(String name, int xCoord, int yCoord){
+        this.name = name;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
     }
+
+    public Cell() {
+
+    }
+
     public void setName(String newName){
        /**
         if(!validName(newName)){
@@ -37,5 +51,21 @@ public class Cell {
     }
     public String name() {
         return name;
+    }
+
+    public int xCoord(){
+        return xCoord;
+    }
+
+    public int yCoord(){
+        return yCoord;
+    }
+
+    public void setXCoord(int xCoord){
+        this.xCoord = xCoord;
+    }
+
+    public void setYCoord(int yCoord){
+        this.yCoord = yCoord;
     }
 }
