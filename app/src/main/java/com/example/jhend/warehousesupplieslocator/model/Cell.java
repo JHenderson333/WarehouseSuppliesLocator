@@ -5,7 +5,7 @@ package com.example.jhend.warehousesupplieslocator.model;
  */
 
 public class Cell {
-    String name;
+    private String name;
     public boolean setName(String newName){
         if(!validName(newName)){
             return false;
