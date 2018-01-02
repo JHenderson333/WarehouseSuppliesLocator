@@ -4,7 +4,6 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
 import com.example.jhend.warehousesupplieslocator.model.Cell;
-import com.example.jhend.warehousesupplieslocator.model.CellDao;
 
 /**
  * Created by jhend on 1/2/2018.

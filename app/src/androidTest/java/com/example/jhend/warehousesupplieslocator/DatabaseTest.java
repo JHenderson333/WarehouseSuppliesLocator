@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.example.jhend.warehousesupplieslocator.database.WarehouseDatabase;
 import com.example.jhend.warehousesupplieslocator.model.Cell;
-import com.example.jhend.warehousesupplieslocator.model.CellDao;
+import com.example.jhend.warehousesupplieslocator.database.CellDao;
 
 import org.junit.After;
 import org.junit.Before;
