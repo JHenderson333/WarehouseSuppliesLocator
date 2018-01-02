@@ -29,4 +29,10 @@ public class DatabaseTest{
     public void testConnection(){
         assertTrue(databaseContract.connectToDatabase());
     }
+
+    @Test
+    public void testCreateDatabase(){
+        assertTrue(databaseContract.createDatabase());
+    }
+
 }
