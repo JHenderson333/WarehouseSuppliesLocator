@@ -1,9 +1,12 @@
 package com.example.jhend.warehousesupplieslocator.database;
 
+import com.example.jhend.warehousesupplieslocator.model.Cell;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 /**
  * @author James D. Henderson
  *
@@ -16,7 +19,10 @@ public class AccountDatabaseManager {
     AccountDatabaseManager(){
 
     }
+
     private static Connection databaseConnection;
+
+
     public static boolean connectToDatabase() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
