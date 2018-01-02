@@ -3,6 +3,7 @@ package com.example.jhend.warehousesupplieslocator.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
+import com.example.jhend.warehousesupplieslocator.database.dao.CellDao;
 import com.example.jhend.warehousesupplieslocator.model.Cell;
 
 /**

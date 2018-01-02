@@ -1,4 +1,4 @@
-package com.example.jhend.warehousesupplieslocator.database;
+package com.example.jhend.warehousesupplieslocator.database.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -18,10 +18,15 @@ public interface CellDao {
     @Query("SELECT * FROM Cell")
     List<Cell> getAll();
 
+    @Query("DELETE FROM Cell")
+    void deleteAll();
+
 
     @Insert
     void insertAll(Cell... Cells);
 
     @Delete
     void delete(Cell Cell);
+
+
 }
