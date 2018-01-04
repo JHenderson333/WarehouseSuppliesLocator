@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.jhend.warehousesupplieslocator.R;
 import com.example.jhend.warehousesupplieslocator.database.DatabaseManager;
 import com.example.jhend.warehousesupplieslocator.model.Item;
+import com.example.jhend.warehousesupplieslocator.utility.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +39,7 @@ public class ItemSearch extends ListActivity {
         handleIntent(getIntent());
 // Parallel array of which template objects to bind to those columns.
 
-        loadDatabase();
+        databaseManager = ActivityUtils.getDatabaseManagerForActivity(getApplicationContext());
         addItemDatabase("Carflex 1 in", "C00", "Flexible rubber pipe");
         addItemDatabase("Carflex 2 in", "C00", "Flexible rubber pipe");
         addItemDatabase("Carflex 1.5 in", "C00", "Flexible rubber pipe");
@@ -53,16 +54,6 @@ public class ItemSearch extends ListActivity {
         return super.onSearchRequested();
     }
 
-    private void loadDatabase(){
-        new AsyncTask<Void, Void, Void>(){
-            protected Void doInBackground(Void... voids) {
-                databaseManager = DatabaseManager.getInstance();
-                databaseManager.loadDatabaseManager(getApplicationContext());
-                return null;
-            }
-        }.execute();
-
-    }
 
     private void handleIntent(Intent intent) {
         Log.d("intent", intent.getAction().toString());
@@ -92,6 +83,9 @@ public class ItemSearch extends ListActivity {
     void handleQuery(String query){
         Log.d("Action", "Handling Query");
         ArrayList<String> results = databaseManager.findItemsNameList(query);
+        if(results == null){
+            return;
+        }
         ArrayAdapter<String> resultsAdapater = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 results);
@@ -116,6 +110,7 @@ public class ItemSearch extends ListActivity {
                 String itemName = listView.getItemAtPosition(i).toString();
                 Log.d("item click", itemName);
                 Intent intent = new Intent(getApplicationContext(), ItemLocator.class);
+                intent.putExtra("item_name", itemName);
                 startActivity(intent);
             }
         });

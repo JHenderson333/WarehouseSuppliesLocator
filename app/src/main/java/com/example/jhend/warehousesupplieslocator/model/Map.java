@@ -8,4 +8,6 @@ import java.util.HashMap;
 
 public class Map {
     private HashMap<String, Cell> cells;
+    int height;
+    int width;
 }
