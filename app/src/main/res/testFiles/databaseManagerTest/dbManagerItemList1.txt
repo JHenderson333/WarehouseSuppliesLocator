@@ -1,0 +1,2 @@
+Carflex|C00|rubber flexible pipe
+Weather-Proof Receptacle|C01|Receptacle that is weather and tamper resistant
