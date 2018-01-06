@@ -2,6 +2,7 @@ package com.example.jhend.warehousesupplieslocator.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -46,12 +47,12 @@ public class ItemLocator extends AppCompatActivity {
 
 
         databaseManager = ActivityUtils.getDatabaseManagerForActivity(getApplicationContext());
-
+        /*
         addItemDatabase("Carflex 1 in", "C00", "Flexible rubber pipe");
         addItemDatabase("Carflex 2 in", "C00", "Flexible rubber pipe");
         addItemDatabase("Carflex 1.5 in", "C00", "Flexible rubber pipe");
         addItemDatabase("Carflex .75 in", "C00", "Flexible rubber pipe");
-        
+        */
         loadMap();
         handleSearchedItem();
     }
@@ -61,7 +62,11 @@ public class ItemLocator extends AppCompatActivity {
         if(extras == null){
             return;
         }
-        String itemName = extras.get("item_name").toString();
+        Object itemObject = extras.get("item_name");
+        if(itemObject == null){
+            return;
+        }
+        String itemName = itemObject.toString();
         Cell cell = getCellForItem(itemName);
         mapView.setHighlightCell(cell);
         if(itemName == null){
@@ -105,16 +110,20 @@ public class ItemLocator extends AppCompatActivity {
     private void loadSampleCells(){
         new AsyncTask<Void, Void, Void> (){
             protected Void doInBackground (Void...voids){
-                Cell c = new Cell("C00", 0, 15);
-                databaseManager.addCellToDatabase(c);
-                c = new Cell("C01", 0, 14);
-                databaseManager.addCellToDatabase(c);
-                c = new Cell("C02", 0, 13);
-                databaseManager.addCellToDatabase(c);
-                c = new Cell("D00" , 15, 12);
-                databaseManager.addCellToDatabase(c);
-                c = new Cell("D01" , 15, 11);
-                databaseManager.addCellToDatabase(c);
+                try {
+                    Cell c = new Cell("C00", 0, 15);
+                    databaseManager.addCellToDatabase(c);
+                    c = new Cell("C01", 0, 14);
+                    databaseManager.addCellToDatabase(c);
+                    c = new Cell("C02", 0, 13);
+                    databaseManager.addCellToDatabase(c);
+                    c = new Cell("D00", 15, 12);
+                    databaseManager.addCellToDatabase(c);
+                    c = new Cell("D01", 15, 11);
+                    databaseManager.addCellToDatabase(c);
+                }catch(SQLiteConstraintException e){
+                    return null;
+                }
                 return null;
             }
         }.execute();
@@ -125,7 +134,7 @@ public class ItemLocator extends AppCompatActivity {
         try {
             cell = new AsyncTask<Void, Void, Cell>(){
                 protected Cell doInBackground(Void... voids) {
-                    Item item = DatabaseManager.getItemByName(itemName); //TODO HANDLE ITEM NOT FOUND
+                    Item item = databaseManager.getItemByName(itemName); //TODO HANDLE ITEM NOT FOUND
                     Log.d("db size", ""+databaseManager.getItems().size());
                     String cellName = item.cellName();
                     return databaseManager.getCellByName(cellName);

@@ -33,13 +33,19 @@ public class DatabaseManager {
     private static HashMap<String, Item> itemMap;
     private static HashMap<String, Cell> cellMap;
     private static WarehouseDatabase warehouseDatabase;
+    private static boolean isLoaded = false;
+
     public static DatabaseManager getInstance(){
         if(instance == null){
-            instance = new DatabaseManager();
+            synchronized (DatabaseManager.class){
+                if(instance == null) {
+                    instance = new DatabaseManager();
+                }
+            }
+
         }
         return instance;
     }
-
     public ArrayList<String> findItemsNameList(String partial){
         Scanner partialScanner = new Scanner(partial.toLowerCase());
         ArrayList<String> searchWords = new ArrayList<String>();
@@ -108,12 +114,14 @@ public class DatabaseManager {
         }
     }
     public static void loadDatabaseManager(final Context context){
+        if(isLoaded)
+            return;
         getInstance();
         loadDatabase(context);
-        instance.itemMap = new HashMap<String, Item>();
-        instance.cellMap = new HashMap<String, Cell>();
+        itemMap = new HashMap<String, Item>();
+        cellMap = new HashMap<String, Cell>();
         loadItemNameMap();
-
+        isLoaded = true;
 
     }
     private static void loadDatabase(Context context){
@@ -122,7 +130,7 @@ public class DatabaseManager {
     
     public static void addItemToDatabase(Item item){
         warehouseDatabase.itemDao().insertAll(item);
-        instance.itemMap.put(item.name(), item);
+        itemMap.put(item.name(), item);
         loadItemNameMap();
     }
 
