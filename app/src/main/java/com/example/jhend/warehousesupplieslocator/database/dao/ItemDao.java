@@ -22,6 +22,8 @@ public interface ItemDao {
     @Query("DELETE FROM Item")
     void deleteAll();
 
+    @Query("SELECT * FROM Item WHERE name = :name")
+    Item getItemByName(String name);
 
     @Insert
     void insertAll(Item... Items);

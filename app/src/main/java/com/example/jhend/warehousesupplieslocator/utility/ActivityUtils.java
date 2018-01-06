@@ -1,13 +1,18 @@
 package com.example.jhend.warehousesupplieslocator.utility;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Interpolator;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.service.media.MediaBrowserService;
 import android.support.v4.media.MediaBrowserServiceCompat;
 
 import com.example.jhend.warehousesupplieslocator.database.DatabaseManager;
+import com.example.jhend.warehousesupplieslocator.model.Cell;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -41,4 +46,15 @@ public class ActivityUtils {
         }
         return instance;
     }
+
+
+
+
+
+
+    /**
+     * Draw Cells at the correct location;
+     */
+    private void loadCells(){}
+
 }

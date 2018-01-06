@@ -6,6 +6,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.jhend.warehousesupplieslocator.model.Cell;
 import com.example.jhend.warehousesupplieslocator.model.Item;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Vector;
 
 /**
  * Created by jhend on 1/3/2018.
@@ -28,6 +30,8 @@ import java.util.Set;
 public class DatabaseManager {
     private static DatabaseManager instance;
     private static HashMap<String, ArrayList<String>> itemNameMap;
+    private static HashMap<String, Item> itemMap;
+    private static HashMap<String, Cell> cellMap;
     private static WarehouseDatabase warehouseDatabase;
     public static DatabaseManager getInstance(){
         if(instance == null){
@@ -96,7 +100,7 @@ public class DatabaseManager {
     /**
      * TODO: STUB METHOD UPDATE LATER
      */
-    private static void loadItemMap(){
+    private static void loadItemNameMap(){
         itemNameMap = new HashMap<String, ArrayList<String>>();
         List<Item> itemList = warehouseDatabase.itemDao().getAll();
         for(Item item : itemList){
@@ -106,7 +110,11 @@ public class DatabaseManager {
     public static void loadDatabaseManager(final Context context){
         getInstance();
         loadDatabase(context);
-        loadItemMap();
+        instance.itemMap = new HashMap<String, Item>();
+        instance.cellMap = new HashMap<String, Cell>();
+        loadItemNameMap();
+
+
     }
     private static void loadDatabase(Context context){
         warehouseDatabase  = Room.inMemoryDatabaseBuilder(context, WarehouseDatabase.class).build();
@@ -114,7 +122,8 @@ public class DatabaseManager {
     
     public static void addItemToDatabase(Item item){
         warehouseDatabase.itemDao().insertAll(item);
-        loadItemMap();
+        instance.itemMap.put(item.name(), item);
+        loadItemNameMap();
     }
 
     private static void updateItemMap(String itemName){
@@ -129,5 +138,27 @@ public class DatabaseManager {
             itemNameList.add(itemName);
             itemNameMap.put(word, itemNameList);
         }
+    }
+
+    public static void addCellToDatabase(Cell c) {
+        warehouseDatabase.cellDao().insertAll(c);
+        cellMap.put(c.name(), c);
+    }
+
+    public static List<Cell> getCells(){
+        return warehouseDatabase.cellDao().getAll();
+    }
+
+    public static List<Item> getItems(){
+        return warehouseDatabase.itemDao().getAll();
+    }
+
+
+    public static Item getItemByName(String itemName){
+        return itemMap.get(itemName);
+    }
+
+    public static Cell getCellByName(String cellName){
+        return cellMap.get(cellName);
     }
 }

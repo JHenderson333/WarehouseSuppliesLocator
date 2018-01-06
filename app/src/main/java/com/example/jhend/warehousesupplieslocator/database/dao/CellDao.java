@@ -21,6 +21,8 @@ public interface CellDao {
     @Query("DELETE FROM Cell")
     void deleteAll();
 
+    @Query("SELECT * FROM Cell WHERE name = :name")
+    Cell getCellByName(String name);
 
     @Insert
     void insertAll(Cell... Cells);

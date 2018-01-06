@@ -72,4 +72,15 @@ public class CellDaoTest {
         List<Cell> cells = cellDao.getAll();
         assertEquals(0, cells.size());
     }
+
+    @Test
+    public void testCellDao(){
+        Cell cell = new Cell();
+        cell.setName("C02");
+        cell.setXCoord(0);
+        cell.setYCoord(0);
+
+        cellDao.insertAll(cell);
+        assertEquals("C02", cellDao.getCellByName("C02").name());
+    }
 }

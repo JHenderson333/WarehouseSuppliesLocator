@@ -69,4 +69,11 @@ public class ItemDaoTest {
         List<Item> items = itemDao.getAll();
         assertEquals(0, items.size());
     }
+
+    @Test
+    public void testGetItemByName(){
+        Item item = new Item("10-2 Wire", "C00", "On the floor, yellow wire");
+        itemDao.insertAll(item);
+        assertEquals(item.name(), itemDao.getItemByName(item.name()).name());
+    }
 }
